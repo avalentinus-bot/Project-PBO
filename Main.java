@@ -5,11 +5,11 @@ public class Main {
         Scanner input = new Scanner(System.in);
         
         // Membuat Object Pet dan Food
-        Pet myPet = new Pet("Buddy");
-        Food snack = new Food("Biskuit", 15);
-        Food meat = new Food("Daging Segar", 30);
+        Pet myPet = new Pet("kucing");
+        Food snack = new Food("whiskas", 15);
+        Food meat = new Food("ikan asin", 30);
 
-        System.out.println("=== VIRTUAL PET SIMULATOR ===");
+        System.out.println("=== ambanimal ===");
 
         // Loop Game: Berjalan selama Health peliharaan masih di atas 0
         while (myPet.getHealth() > 0) {
@@ -26,7 +26,7 @@ public class Main {
 
             // Logika aksi berdasarkan input
             if (pilihan == 1) {
-                System.out.println("Pilih makanan: 1. Biskuit 2. Daging Segar");
+                System.out.println("Pilih makanan: 1. whiskas 2. ikan asin");
                 System.out.print("Pilihan makanan: ");
                 int pilMakan = input.nextInt();
                 

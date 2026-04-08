@@ -9,7 +9,7 @@ public class Pet {
     // 2. Constructor (Milestone 1)
     public Pet(String name) {
         this.name = name;
-        this.hunger = 20;
+        this.hunger = 80;
         this.happiness = 80;
         this.energy = 50;
         this.health = 100;
@@ -52,14 +52,14 @@ public class Pet {
     }
 
     public void play() {
-        setHappiness(this.happiness + 10);
+        setHappiness(this.happiness + 20);
         setEnergy(this.energy - 10);
         System.out.println(name + " sedang bermain dan bersenang-senang...");
         timePasses();
     }
 
     public void sleep() {
-        setEnergy(this.energy + 20);
+        setEnergy(this.energy + 80);
         System.out.println(name + " sedang tidur nyenyak...");
         timePasses();
     }
@@ -70,8 +70,8 @@ public class Pet {
         setHappiness(this.happiness - 5);
         setEnergy(this.energy - 5);
 
-        // Jika hunger >= 90, health berkurang
-        if (this.hunger >= 90) {
+        // Jika hunger >= 70, health berkurang
+        if (this.hunger >= 70) {
             setHealth(this.health - 10);
             System.out.println("⚠️ PERINGATAN: " + name + " kelaparan! Health menurun!");
         }
