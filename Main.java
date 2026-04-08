@@ -9,7 +9,7 @@ public class Main {
         Food snack = new Food("whiskas", 15);
         Food meat = new Food("ikan asin", 30);
 
-        System.out.println("=== ambanimal ===");
+        System.out.println("=== piaraan ===");
 
         // Loop Game: Berjalan selama Health peliharaan masih di atas 0
         while (myPet.getHealth() > 0) {
