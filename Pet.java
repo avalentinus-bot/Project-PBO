@@ -6,7 +6,7 @@ public class Pet {
     private int energy;
     private int health;
 
-    // 2. Constructor (Milestone 1)
+    // Constructor (Milestone 1) mehode saat pertama kali dipangglil
     public Pet(String name) {
         this.name = name;
         this.hunger = 80;
@@ -15,9 +15,17 @@ public class Pet {
         this.health = 100;
     }
 
-    // 3. Getter & Setter dengan Validasi (Milestone 2)
+    //  Getter & Setter dengan Validasi (Milestone 2) (memanggil nilai atribut privat)
     public String getName() { return name; }
-    public int getHealth() { return health; }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getHunger() { return hunger; }
+    public int getHappiness() { return happiness; }
+    public int getEnergy() { return energy; }
+
 
     public void setHunger(int hunger) {
         if (hunger < 0) this.hunger = 0;
@@ -43,9 +51,10 @@ public class Pet {
         else this.health = health;
     }
 
-    // 4. Method Operasional (Milestone 1 di-upgrade ke Milestone 2)
-    public void feed(Food food) {
-        // Mengurangi hunger berdasarkan nutritionValue makanan
+    // Method Operasional (Upgrade dari Milestone 2)
+    // Metode yang kita gunakan untuk memberi makan, bermain, dan tidur
+    public void feed(Food food) { 
+        // Mengurangi hunger/lapar berdasarkan nutritionValue makanan
         setHunger(this.hunger - food.getNutritionValue());
         System.out.println(name + " makan " + food.getName() + ".");
         timePasses();
@@ -64,14 +73,14 @@ public class Pet {
         timePasses();
     }
 
-    // 5. Method Waktu Berlalu (Milestone 2)
+    // 5. Method ini untuk dipanggil setiap ada aksi (Milestone 2)
     public void timePasses() {
         setHunger(this.hunger + 10);
         setHappiness(this.happiness - 5);
         setEnergy(this.energy - 5);
 
-        // Jika hunger >= 70, health berkurang
-        if (this.hunger >= 70) {
+        // Jika hunger >= 90, health berkurang
+        if (this.hunger >= 90) {
             setHealth(this.health - 10);
             System.out.println("⚠️ PERINGATAN: " + name + " kelaparan! Health menurun!");
         }

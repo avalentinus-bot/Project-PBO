@@ -3,59 +3,62 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        
-        // Membuat Object Pet dan Food
-        Pet myPet = new Pet("kucing");
-        Food snack = new Food("whiskas", 15);
-        Food meat = new Food("ikan asin", 30);
+        Pet myPet = null; // Siapkan variabel induk, isinya nanti sesuai pilihan
 
-        System.out.println("=== piaraan ===");
+        System.out.println("=== VIRTUAL PET SIMULATOR ===");
+        System.out.println("Pilih jenis hewan peliharaan: ");
+        System.out.println("1. Cat  (Mudah dirawat, suka tidur)");
+        System.out.println("2. Dog  (Butuh perhatian, sangat setia)");
+        System.out.println("3. Bird (Makan sedikit, energi cepat habis)");
+        System.out.print("Pilihan (1/2/3): ");
+        int jenis = input.nextInt();
+        input.nextLine(); // Membersihkan sisa enter
 
-        // Loop Game: Berjalan selama Health peliharaan masih di atas 0
+        System.out.print("Berikan nama untuk peliharaanmu: ");
+        String nama = input.nextLine();
+
+        // Membuat objek berdasarkan pilihan user (Polymorphic Reference untuk M3)
+        if (jenis == 1) {
+            myPet = new Cat(nama);
+        } else if (jenis == 2) {
+            myPet = new Dog(nama);
+        } else if (jenis == 3) {
+            myPet = new Bird(nama);
+        } else {
+            System.out.println("Pilihan tidak valid, default ke Cat.");
+            myPet = new Cat(nama);
+        }
+
+        System.out.println("\nSelamat datang, " + myPet.getName() + "!");
+
+        // Loop Game Utama
         while (myPet.getHealth() > 0) {
             myPet.showStatus();
             
-            System.out.println("\nApa yang ingin dilakukan?");
-            System.out.println("1. Feed (Beri Makan)");
-            System.out.println("2. Play (Bermain)");
-            System.out.println("3. Sleep (Tidur)");
-            System.out.println("4. Exit (Keluar)");
+            System.out.println("\nMenu: 1. Feed | 2. Play | 3. Sleep | 4. Exit");
             System.out.print("Pilihan: ");
-            
             int pilihan = input.nextInt();
 
-            // Logika aksi berdasarkan input
             if (pilihan == 1) {
-                System.out.println("Pilih makanan: 1. whiskas 2. ikan asin");
+                System.out.println("Pilih makanan: 1. Dry Food | 2. Wet Food | 3. Treat");
                 System.out.print("Pilihan makanan: ");
                 int pilMakan = input.nextInt();
                 
-                if (pilMakan == 1) myPet.feed(snack);
-                else if (pilMakan == 2) myPet.feed(meat);
-                else System.out.println("Makanan tidak tersedia!");
+                // Menggunakan makanan dari Subclass Food
+                if (pilMakan == 1) myPet.feed(new DryFood());
+                else if (pilMakan == 2) myPet.feed(new WetFood());
+                else myPet.feed(new Treat());
             } 
-            else if (pilihan == 2) {
-                myPet.play();
-            } 
-            else if (pilihan == 3) {
-                myPet.sleep();
-            } 
-            else if (pilihan == 4) {
-                System.out.println("Menutup simulator. Sampai jumpa!");
-                break;
-            } 
-            else {
-                System.out.println("Input tidak valid. Masukkan angka 1-4.");
-            }
+            else if (pilihan == 2) myPet.play();
+            else if (pilihan == 3) myPet.sleep();
+            else if (pilihan == 4) break;
             
             System.out.println("---------------------------------------");
         }
 
-        // Cek kondisi akhir
         if (myPet.getHealth() <= 0) {
-            System.out.println("\n[GAME OVER] " + myPet.getName() + " telah tiada karena tidak terawat...");
+            System.out.println("\n[GAME OVER] " + myPet.getName() + " telah tiada...");
         }
-
         input.close();
     }
 }
