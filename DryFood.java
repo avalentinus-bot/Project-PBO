@@ -2,6 +2,6 @@
 public class DryFood extends Food {
     public DryFood() {
         // super() memanggil constructor milik parent class (Food)
-        super("Dry Food (Makanan Kering)", 15);
+        super("Dry Food (Makanan Kering)", 25);
     }
 }

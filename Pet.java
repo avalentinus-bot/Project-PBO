@@ -1,12 +1,16 @@
 public class Pet {
-    // 1. Atribut Private (Encapsulation Milestone 2)
+    // 1. Deklarasi Atribut (Encapsulation)
+    // Sesuai dengan spesifikasi Milestone 2, semua atribut diatur menggunakan access modifier 'private'.
+    // Ini mencegah modifikasi data secara langsung dari luar class untuk menjaga integritas status hewan.
     private String name;
     private int hunger;
     private int happiness;
     private int energy;
     private int health;
 
-    // Constructor (Milestone 1) mehode saat pertama kali dipangglil
+    // 2. Constructor
+    // Method khusus yang otomatis dieksekusi saat proses instansiasi object baru.
+    // Berfungsi untuk memberikan nilai awal (default state) pada atribut.
     public Pet(String name) {
         this.name = name;
         this.hunger = 80;
@@ -15,18 +19,17 @@ public class Pet {
         this.health = 100;
     }
 
-    //  Getter & Setter dengan Validasi (Milestone 2) (memanggil nilai atribut privat)
+    // 3. Accessor (Getter)
+    // Mengembalikan nilai dari atribut private agar bisa dibaca oleh class lain (seperti Main).
     public String getName() { return name; }
-
-    public int getHealth() {
-        return health;
-    }
-
+    public int getHealth() { return health; }
     public int getHunger() { return hunger; }
     public int getHappiness() { return happiness; }
     public int getEnergy() { return energy; }
 
-
+    // 4. Mutator (Setter) dengan Validasi Data
+    // Mengatur nilai atribut dengan menerapkan rule validasi.
+    // Memastikan parameter input tidak membuat nilai atribut keluar dari batas 0 hingga 100.
     public void setHunger(int hunger) {
         if (hunger < 0) this.hunger = 0;
         else if (hunger > 100) this.hunger = 100;
@@ -51,13 +54,20 @@ public class Pet {
         else this.health = health;
     }
 
-    // Method Operasional (Upgrade dari Milestone 2)
-    // Metode yang kita gunakan untuk memberi makan, bermain, dan tidur
+    // 5. Method Operasional
+    // Menerima object bertipe 'Food' sebagai parameter.
     public void feed(Food food) { 
-        // Mengurangi hunger/lapar berdasarkan nutritionValue makanan
+        // Mengubah state hunger dengan mengurangi nilai nutritionValue dari object food.
         setHunger(this.hunger - food.getNutritionValue());
-        System.out.println(name + " makan " + food.getName() + ".");
-        timePasses();
+        
+        // Logika kondisional: memberikan bonus happiness jika string nama makanan mengandung "treat"
+        if (food.getName().toLowerCase().contains("treat")) {
+            setHappiness(this.happiness + 15); 
+            System.out.println(name + " sangat kegirangan memakan camilan!");
+        } else {
+            System.out.println(name + " makan " + food.getName() + ".");
+        }
+        timePasses(); // Memicu transisi state
     }
 
     public void play() {
@@ -73,20 +83,22 @@ public class Pet {
         timePasses();
     }
 
-    // 5. Method ini untuk dipanggil setiap ada aksi (Milestone 2)
+    // 6. State Management
+    // Method ini mengelola penalti status seiring berjalannya aksi.
     public void timePasses() {
+        // Menggunakan setter untuk menjamin nilai hasil kalkulasi tetap tervalidasi
         setHunger(this.hunger + 10);
         setHappiness(this.happiness - 5);
         setEnergy(this.energy - 5);
 
-        // Jika hunger >= 90, health berkurang
+        // Pengurangan health jika hunger mencapai batas kritis (>= 90)
         if (this.hunger >= 90) {
             setHealth(this.health - 10);
             System.out.println("⚠️ PERINGATAN: " + name + " kelaparan! Health menurun!");
         }
     }
 
-    // 6. Visual Status (Milestone 2)
+    // 7. Visualisasi CLI
     public void showStatus() {
         System.out.println("\n[" + name + "]");
         printBar("Hunger   ", hunger);
@@ -95,6 +107,8 @@ public class Pet {
         printBar("Health   ", health);
     }
 
+    // Method helper dengan access modifier private.
+    // Hanya digunakan secara internal oleh method showStatus() di dalam class ini.
     private void printBar(String label, int value) {
         int dots = value / 10;
         System.out.print(label + ": " + String.format("%3d", value) + "/100 [");
