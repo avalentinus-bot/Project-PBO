@@ -1,6 +1,6 @@
 public class Pet {
     // 1. Deklarasi Atribut (Encapsulation)
-    // Sesuai dengan spesifikasi Milestone 2, semua atribut diatur menggunakan access modifier 'private'.
+    // Milestone 2, semua atribut diatur menggunakan access modifier 'private'.
     // Ini mencegah modifikasi data secara langsung dari luar class untuk menjaga integritas status hewan.
     private String name;
     private int hunger;
@@ -28,11 +28,10 @@ public class Pet {
     public int getEnergy() { return energy; }
 
     // 4. Mutator (Setter) dengan Validasi Data
-    // Mengatur nilai atribut dengan menerapkan rule validasi.
     // Memastikan parameter input tidak membuat nilai atribut keluar dari batas 0 hingga 100.
     public void setHunger(int hunger) {
         if (hunger < 0) this.hunger = 0;
-        else if (hunger > 100) this.hunger = 100;
+      else if (hunger > 100) this.hunger = 100;
         else this.hunger = hunger;
     }
 
@@ -83,8 +82,13 @@ public class Pet {
         timePasses();
     }
 
+    // Method dasar yang akan di-override oleh subclass (Milestone 4)
+    public void makeSound() {
+        System.out.println(name + " membuat suara hewan...");
+    }
+
     // 6. State Management
-    // Method ini mengelola penalti status seiring berjalannya aksi.
+    // Method mengelola penalti status seiring berjalannya aksi.
     public void timePasses() {
         // Menggunakan setter untuk menjamin nilai hasil kalkulasi tetap tervalidasi
         setHunger(this.hunger + 10);

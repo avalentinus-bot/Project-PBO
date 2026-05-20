@@ -10,11 +10,11 @@ public class Food {
         this.name = name;
         this.nutritionValue = nutritionValue;
     }
-    // methode ini mengizinkan class lain melihat isi variabel 'name'
+    // methode mengizinkan class lain melihat isi variabel 'name'
     public String getName() { 
         return name; 
     }
-   // methode ini mengizinkan class lain melihat isi variabel 'nutritionValue'
+   // methode mengizinkan class lain melihat isi variabel 'nutritionValue'
     public int getNutritionValue() { 
         return nutritionValue; 
     }

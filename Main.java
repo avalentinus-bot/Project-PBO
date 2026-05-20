@@ -5,7 +5,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         
         // Deklarasi variabel referensi menggunakan tipe Parent Class (Pet).
-        // Ini adalah penerapan Polymorphic Reference, di mana variabel tipe superclass 
+        // penerapan Polymorphic Reference, di mana variabel tipe superclass 
         // disiapkan untuk menampung objek dari subclass-nya nanti.
         Pet myPet = null; 
 
@@ -43,7 +43,8 @@ public class Main {
         while (myPet.getHealth() > 0) {
             myPet.showStatus();
             
-            System.out.println("\nMenu: 1. Feed | 2. Play | 3. Sleep | 4. Exit");
+            // Menambahkan menu 4. Sound untuk memicu makeSound()
+            System.out.println("\nMenu: 1. Feed | 2. Play | 3. Sleep | 4. Sound | 5. Exit");
             System.out.print("Pilihan: ");
             int pilihan = input.nextInt();
 
@@ -58,9 +59,11 @@ public class Main {
                 else if (pilMakan == 2) myPet.feed(new WetFood());
                 else myPet.feed(new Treat());
             } 
-            else if (pilihan == 2) myPet.play();
+           else if (pilihan == 2) myPet.play();
             else if (pilihan == 3) myPet.sleep();
-            else if (pilihan == 4) break;
+            else if (pilihan == 4) myPet.makeSound(); // Pemanggilan Polymorphic Method
+            else if (pilihan == 5) break;
+            else System.out.println("Pilihan tidak valid!");
             
             System.out.println("---------------------------------------");
         }

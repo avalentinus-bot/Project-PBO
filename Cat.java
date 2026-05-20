@@ -40,12 +40,26 @@ public class Cat extends Pet {
         setHunger(getHunger() + 10);
         setHappiness(getHappiness() - 5);
         // Modifikasi parameter: Cat kehilangan energi lebih lambat (-2) dibandingkan Pet default (-5).
-        setEnergy(getEnergy() - 2); 
-        
+        setEnergy(getEnergy() - 2);
+
         // Pengecekan kondisi kritis menggunakan getter untuk mematuhi prinsip encapsulation.
         if (getHunger() >= 90) {
             setHealth(getHealth() - 10);
             System.out.println("⚠️ " + getName() + " mengeong kelaparan! Health menurun!");
         }
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println("Meow! " + getName() + " meminta perhatian.");
+        setHappiness(getHappiness() + 5);
+    }
+
+    @Override
+    public void play() {
+        System.out.println(getName() + " bermain dengan bola benang!");
+        setHappiness(getHappiness() + 15);
+        setEnergy(getEnergy() - 10);
+        timePasses(); // Memanggil kalkulasi waktu setiap kali ada aksi
     }
 }

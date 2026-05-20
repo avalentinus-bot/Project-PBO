@@ -26,14 +26,28 @@ public class Bird extends Pet {
         // Modifikasi state management khusus untuk class Bird.
         // Bird dirancang untuk lebih cepat lapar (+15) dan energinya lebih cepat habis (-15).
         // Modifikasi ini diimplementasikan menggunakan pemanggilan kombinasi getter dan setter.
-        setHunger(getHunger() + 15); 
+        setHunger(getHunger() + 15);
         setHappiness(getHappiness() - 5);
-        setEnergy(getEnergy() - 15); 
-        
+        setEnergy(getEnergy() - 15);
+
         // Logika kondisi kritis tetap dipertahankan dari implementasi aslinya.
         if (getHunger() >= 90) {
             setHealth(getHealth() - 10);
             System.out.println("⚠️ " + getName() + " lemas kelaparan! Health menurun!");
         }
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println("Tweet! " + getName() + " berkicau merdu.");
+        setHappiness(getHappiness() + 5);
+    }
+
+    @Override
+    public void play() {
+        System.out.println(getName() + " terbang mengelilingi kamar!");
+        setHappiness(getHappiness() + 10);
+        setEnergy(getEnergy() - 15);
+        timePasses();
     }
 }   

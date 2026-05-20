@@ -22,18 +22,31 @@ public class Dog extends Pet {
     @Override
     public void timePasses() {
         setHunger(getHunger() + 10);
-        
+
         // Modifikasi parameter state: 
         // Implementasi spesifik Dog di mana atribut happiness mengalami 
-        // penurunan yang lebih ekstrem (-15) dibandingkan Pet default.
-        setHappiness(getHappiness() - 15); 
+        // penurunan yang lebih banyak (-15) dibandingkan Pet default.
+        setHappiness(getHappiness() - 15);
         setEnergy(getEnergy() - 5);
-        
-        // Pengecekan threshold kritis untuk pengurangan health.
+
         // Validasi tetap menggunakan getter untuk menjaga prinsip encapsulation.
         if (getHunger() >= 90) {
             setHealth(getHealth() - 10);
             System.out.println("⚠️ " + getName() + " melolong kelaparan! Health menurun!");
         }
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println("Woof! " + getName() + " menggonggong riang.");
+        setHappiness(getHappiness() + 5);
+    }
+
+    @Override
+    public void play() {
+        System.out.println(getName() + " bermain fetch mengejar bola!");
+        setHappiness(getHappiness() + 20);
+        setEnergy(getEnergy() - 20);
+        timePasses();
     }
 }
