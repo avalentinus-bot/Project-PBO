@@ -47,6 +47,10 @@ public class Dog extends Pet {
         System.out.println(getName() + " bermain fetch mengejar bola!");
         setHappiness(getHappiness() + 20);
         setEnergy(getEnergy() - 20);
-        timePasses();
+    
+    }
+    @Override
+    public String getSpecies() {
+        return "Dog";
     }
 }

@@ -41,6 +41,8 @@ public class Main {
         // Game loop: Kondisi terminasi menggunakan getter getHealth() untuk 
         // memastikan program mematuhi aturan encapsulation.
         while (myPet.getHealth() > 0) {
+
+            myPet.updateRealTime(); // Memperbarui state berdasarkan waktu dunia nyata
             myPet.showStatus();
             
             // Menambahkan menu 4. Sound untuk memicu makeSound()

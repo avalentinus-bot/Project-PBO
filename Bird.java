@@ -48,6 +48,10 @@ public class Bird extends Pet {
         System.out.println(getName() + " terbang mengelilingi kamar!");
         setHappiness(getHappiness() + 10);
         setEnergy(getEnergy() - 15);
-        timePasses();
+    
+    }
+    @Override
+    public String getSpecies() {
+        return "Bird";
     }
 }   

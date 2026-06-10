@@ -60,6 +60,9 @@ public class Cat extends Pet {
         System.out.println(getName() + " bermain dengan bola benang!");
         setHappiness(getHappiness() + 15);
         setEnergy(getEnergy() - 10);
-        timePasses(); // Memanggil kalkulasi waktu setiap kali ada aksi
+    }
+    @Override
+    public String getSpecies() {
+        return "Cat";
     }
 }

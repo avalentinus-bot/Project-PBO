@@ -1,37 +1,37 @@
-public class Pet {
+public abstract class Pet {
     // 1. Deklarasi Atribut (Encapsulation)
-    // Milestone 2, semua atribut diatur menggunakan access modifier 'private'.
-    // Ini mencegah modifikasi data secara langsung dari luar class untuk menjaga integritas status hewan.
     private String name;
     private int hunger;
     private int happiness;
     private int energy;
     private int health;
+    
+    // --- TAMBAHAN BARU: Variabel untuk menyimpan waktu dunia nyata ---
+    private long lastTimeChecked; 
 
     // 2. Constructor
-    // Method khusus yang otomatis dieksekusi saat proses instansiasi object baru.
-    // Berfungsi untuk memberikan nilai awal (default state) pada atribut.
     public Pet(String name) {
         this.name = name;
         this.hunger = 80;
         this.happiness = 80;
         this.energy = 50;
         this.health = 100;
+        
+        // --- TAMBAHAN BARU: Catat waktu (dalam milidetik) saat peliharaan dibuat ---
+        this.lastTimeChecked = System.currentTimeMillis(); 
     }
 
-    // 3. Accessor (Getter)
-    // Mengembalikan nilai dari atribut private agar bisa dibaca oleh class lain (seperti Main).
+    // 3. Accessor (Getter) - (TETAP SAMA)
     public String getName() { return name; }
     public int getHealth() { return health; }
     public int getHunger() { return hunger; }
     public int getHappiness() { return happiness; }
     public int getEnergy() { return energy; }
 
-    // 4. Mutator (Setter) dengan Validasi Data
-    // Memastikan parameter input tidak membuat nilai atribut keluar dari batas 0 hingga 100.
+    // 4. Mutator (Setter) - (TETAP SAMA)
     public void setHunger(int hunger) {
         if (hunger < 0) this.hunger = 0;
-      else if (hunger > 100) this.hunger = 100;
+        else if (hunger > 100) this.hunger = 100;
         else this.hunger = hunger;
     }
 
@@ -54,48 +54,52 @@ public class Pet {
     }
 
     // 5. Method Operasional
-    // Menerima object bertipe 'Food' sebagai parameter.
     public void feed(Food food) { 
-        // Mengubah state hunger dengan mengurangi nilai nutritionValue dari object food.
-        setHunger(this.hunger - food.getNutritionValue());
-        
-        // Logika kondisional: memberikan bonus happiness jika string nama makanan mengandung "treat"
-        if (food.getName().toLowerCase().contains("treat")) {
-            setHappiness(this.happiness + 15); 
-            System.out.println(name + " sangat kegirangan memakan camilan!");
-        } else {
-            System.out.println(name + " makan " + food.getName() + ".");
-        }
-        timePasses(); // Memicu transisi state
-    }
-
-    public void play() {
-        setHappiness(this.happiness + 20);
-        setEnergy(this.energy - 10);
-        System.out.println(name + " sedang bermain dan bersenang-senang...");
-        timePasses();
+        setHunger(this.hunger - food.getHungerReduction());
+        setHappiness(this.happiness + food.getHappinessBoost());
+        System.out.println(name + " makan " + food.getName() + ".");
+        // timePasses(); <-- DIHAPUS: Karena waktu sekarang berjalan otomatis, bukan karena aksi
     }
 
     public void sleep() {
         setEnergy(this.energy + 80);
         System.out.println(name + " sedang tidur nyenyak...");
-        timePasses();
+        // timePasses(); <-- DIHAPUS
     }
 
-    // Method dasar yang akan di-override oleh subclass (Milestone 4)
-    public void makeSound() {
-        System.out.println(name + " membuat suara hewan...");
+    // --- REFACTORING MILESTONE 5: Abstract Methods ---
+    public abstract void play();
+    public abstract void makeSound();
+    public abstract String getSpecies();
+
+    // --- SISTEM WAKTU (DELTA TIME) ---
+    // Method ini mengecek selisih waktu realtime.
+    public void updateRealTime() {
+        long currentTime = System.currentTimeMillis();
+        // Menghitung selisih waktu dalam satuan detik
+        long elapsedTimeInSeconds = (currentTime - lastTimeChecked) / 1000;
+
+        // KONFIGURASI: 1 siklus waktu di game = setiap 60 detik di dunia nyata.
+        // (Kamu bisa ganti angka 60 ini jadi 30 atau 120 kalau mau lebih lama).
+        long cycles = elapsedTimeInSeconds / 60;
+
+        if (cycles > 0) {
+            // Melakukan looping sebanyak siklus waktu yang terlewat
+            for (int i = 0; i < cycles; i++) {
+                timePasses(); // Memanggil method timePasses() yang di-override oleh tiap hewan
+            }
+            // Update waktu terakhir agar tidak dobel kalkulasi
+            lastTimeChecked = currentTime; 
+            System.out.println("\n [" + cycles + " siklus waktu nyata telah berlalu...]");
+        }
     }
 
     // 6. State Management
-    // Method mengelola penalti status seiring berjalannya aksi.
     public void timePasses() {
-        // Menggunakan setter untuk menjamin nilai hasil kalkulasi tetap tervalidasi
         setHunger(this.hunger + 10);
         setHappiness(this.happiness - 5);
         setEnergy(this.energy - 5);
 
-        // Pengurangan health jika hunger mencapai batas kritis (>= 90)
         if (this.hunger >= 90) {
             setHealth(this.health - 10);
             System.out.println("⚠️ PERINGATAN: " + name + " kelaparan! Health menurun!");
@@ -104,15 +108,14 @@ public class Pet {
 
     // 7. Visualisasi CLI
     public void showStatus() {
-        System.out.println("\n[" + name + "]");
+        // Memanggil abstract method getSpecies() agar outputnya menjadi [Dog] Nama, [Cat] Nama
+        System.out.println("\n[" + getSpecies() + "] " + name);
         printBar("Hunger   ", hunger);
         printBar("Happiness", happiness);
         printBar("Energy   ", energy);
         printBar("Health   ", health);
     }
 
-    // Method helper dengan access modifier private.
-    // Hanya digunakan secara internal oleh method showStatus() di dalam class ini.
     private void printBar(String label, int value) {
         int dots = value / 10;
         System.out.print(label + ": " + String.format("%3d", value) + "/100 [");

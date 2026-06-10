@@ -9,4 +9,14 @@ public class WetFood extends Food {
         // Hal ini memungkinkan inisialisasi atribut parent tanpa harus mendeklarasikan
         super("Wet Food (Ikan bandeng)", 35);
     }
+    // Mengimplementasikan nilai spesifik untuk WetFood
+    @Override
+    public int getHungerReduction() {
+        return 35; // Mengurangi lapar sedikit
+    }
+
+    @Override
+    public int getHappinessBoost() {
+        return 10; // Memberikan kebahagiaan tinggi
+    }
 }   
