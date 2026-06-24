@@ -49,18 +49,22 @@ public class Cat extends Pet {
         }
     }
     
+    // abstract method makeSound()
     @Override
     public void makeSound() {
         System.out.println("Meow! " + getName() + " meminta perhatian.");
         setHappiness(getHappiness() + 5);
     }
 
+    // abstract method play()
     @Override
     public void play() {
         System.out.println(getName() + " bermain dengan bola benang!");
         setHappiness(getHappiness() + 15);
         setEnergy(getEnergy() - 10);
     }
+
+    // abstract method getSpecies()
     @Override
     public String getSpecies() {
         return "Cat";

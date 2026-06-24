@@ -9,7 +9,9 @@ public class Main {
         // disiapkan untuk menampung objek dari subclass-nya nanti.
         Pet myPet = null; 
 
-        System.out.println("=== VIRTUAL PET SIMULATOR ===");
+        System.out.println("+=============================+");
+        System.out.println("|    VIRTUAL PET SIMULATOR    |");
+        System.out.println("+=============================+");
         // Pemain memilih jenis hewan peliharaan
         System.out.println("Pilih jenis hewan peliharaan: ");
         System.out.println("1. Cat  (Mudah dirawat, suka tidur)");
@@ -36,18 +38,28 @@ public class Main {
             myPet = new Cat(nama);
         }
 
+        clearScreen();
         System.out.println("\nSelamat datang, " + myPet.getName() + "!");
 
         // Game loop: Kondisi terminasi menggunakan getter getHealth() untuk 
         // memastikan program mematuhi aturan encapsulation.
         while (myPet.getHealth() > 0) {
-
+            // Memberikan jeda sebentar agar user bisa melihat aksi yang baru dilakukan
+            try { Thread.sleep(1200); } catch (Exception e) {}
+            
+            clearScreen(); // Membersihkan layar agar tidak menumpuk ke bawah
+            
             myPet.updateRealTime(); // Memperbarui state berdasarkan waktu dunia nyata
             myPet.showStatus();
             
-            // Menambahkan menu 4. Sound untuk memicu makeSound()
-            System.out.println("\nMenu: 1. Feed | 2. Play | 3. Sleep | 4. Sound | 5. Exit");
-            System.out.print("Pilihan: ");
+            System.out.println("\n+---------------------------------------+");
+            System.out.println("|               MAIN MENU               |");
+            System.out.println("+---------------------------------------+");
+            System.out.println("| 1. Feed          4. Sound             |");
+            System.out.println("| 2. Play          5. Check Status      |");
+            System.out.println("| 3. Sleep         6. Exit              |");
+            System.out.println("+---------------------------------------+");
+            System.out.print("Pilih aksi: ");
             int pilihan = input.nextInt();
 
             if (pilihan == 1) {
@@ -64,16 +76,30 @@ public class Main {
            else if (pilihan == 2) myPet.play();
             else if (pilihan == 3) myPet.sleep();
             else if (pilihan == 4) myPet.makeSound(); // Pemanggilan Polymorphic Method
-            else if (pilihan == 5) break;
+            else if (pilihan == 5) System.out.println("Mengecek status terbaru...");
+            else if (pilihan == 6) break;
             else System.out.println("Pilihan tidak valid!");
-            
-            System.out.println("---------------------------------------");
         }
 
         // Validasi Game Over jika keluar dari loop karena health habis
         if (myPet.getHealth() <= 0) {
+            clearScreen();
             System.out.println("\n[GAME OVER] " + myPet.getName() + " telah tiada...");
         }
         input.close();
+    }
+
+    // Helper method untuk membersihkan terminal console
+    public static void clearScreen() {
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033\143");
+            }
+        } catch (Exception ex) {
+            // Jika terminal tidak mendukung, beri jeda baris saja
+            System.out.println("\n\n\n\n\n");
+        }
     }
 }
