@@ -1,4 +1,6 @@
-public abstract class Pet {
+import java.io.Serializable;
+
+public abstract class Pet implements Serializable {
     // 1. Deklarasi Atribut (Encapsulation)
     private String name;
     private int hunger;
@@ -8,6 +10,12 @@ public abstract class Pet {
     
     // --- FITUR BONUS: SISTEM UMUR ---
     private int age;
+    
+    // --- FITUR BONUS: TOKO & INVENTORI ---
+    private int money;
+    private int dryFoodCount;
+    private int wetFoodCount;
+    private int treatCount;
     
     // --- Variabel untuk menyimpan waktu ---
     private long lastTimeChecked; 
@@ -20,6 +28,10 @@ public abstract class Pet {
         this.energy = 50;
         this.health = 100;
         this.age = 0; // Hewan dimulai dari umur 0 (Baby)
+        this.money = 50; // Modal awal 50 koin
+        this.dryFoodCount = 3;
+        this.wetFoodCount = 1;
+        this.treatCount = 1;
         
         // --- Catat waktu (dalam milidetik) saat peliharaan dibuat ---
         this.lastTimeChecked = System.currentTimeMillis(); 
@@ -35,6 +47,23 @@ public abstract class Pet {
     // Getter untuk umur
     public int getAge() { return age; }
     
+    public int getMoney() { return money; }
+    public void setMoney(int money) { this.money = money; }
+    
+    public int getDryFoodCount() { return dryFoodCount; }
+    public void setDryFoodCount(int count) { this.dryFoodCount = count; }
+    
+    public int getWetFoodCount() { return wetFoodCount; }
+    public void setWetFoodCount(int count) { this.wetFoodCount = count; }
+    
+    public int getTreatCount() { return treatCount; }
+    public void setTreatCount(int count) { this.treatCount = count; }
+
+    // Setter untuk waktu terakhir dicek (dibutuhkan saat load game)
+    public void setLastTimeChecked(long time) {
+        this.lastTimeChecked = time;
+    }
+
     // Penentuan Fase Umur berdasarkan atribut age
     public String getAgePhase() {
         if (age < 5) return "Baby";
@@ -125,6 +154,7 @@ public abstract class Pet {
         // Memanggil abstract method getSpecies() agar outputnya menjadi [Dog] Nama, [Cat] Nama
         System.out.println(  "| Status Peliharaan: " + name + " [ " + getSpecies() + " ] ");
         System.out.println(  "| Fase Umur        : " + getAgePhase() + " (Umur: " + age + ")");
+        System.out.println(  "| Uang Koin        : " + money + " koin");
         System.out.println("+---------------------------------------+");
         printBar("| Hunger   ", hunger);
         printBar("| Happiness", happiness);
